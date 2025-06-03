@@ -8,5 +8,5 @@ public class ATMValidator {
         return true;
     }
 
-    public static boolean validateTransfer(String )
+//    public static boolean validateTransfer(String )
 }

@@ -19,6 +19,7 @@ public class Balance {
     @JoinColumn(name = "account_number", referencedColumnName = "account_number", nullable = false, unique = true)
     private Customer customer;
 
-    @Column(name = "balance", nullable = false, precision = 15, scale = 2)
+//    @Column(name = "balance", nullable = false, precision = 15, scale = 2)
+    @Column(name = "balance", nullable = false)
     private Double balance;
 }

@@ -11,20 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/customers")
 public class CustomerController {
-    private CustomerServiceImpl customerService;
-    private BalanceServiceImpl balanceService;
-    CustomerController(CustomerServiceImpl customerService, BalanceServiceImpl balanceService){
-        this.customerService = customerService;
-        this.balanceService = balanceService;
-    }
+    private final CustomerServiceImpl customerService;
 
-//      * `POST /api/customers` — Register new customer
-//
-//  * `GET /api/customers/{accountNumber}` — Get customer by account number
-//
-//  * `PUT /api/customers/{accountNumber}` — Update customer
-//
-//  * `DELETE /api/customers/{accountNumber}` — Delete customer
+    CustomerController(CustomerServiceImpl customerService){
+        this.customerService = customerService;
+    }
 
     @PostMapping()
     public ResponseEntity<Response> createCustomer(@RequestBody CustomerDto customerDto){
@@ -36,12 +27,12 @@ public class CustomerController {
         Response response = customerService.getCustomerByAccountNumber(accountNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping("/{accountNumber}")
+    @PostMapping("/update/{accountNumber}")
     public ResponseEntity<Response> updateCustomer(@PathVariable String accountNumber, @RequestBody CustomerDto customerDto){
         Response response = customerService.updateCustomer(accountNumber, customerDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping("/{accountNumber}")
+    @PostMapping("/delete/{accountNumber}")
     public ResponseEntity<Response> deleteCustomer(@PathVariable String accountNumber){
         Response response = customerService.deleteCustomerByAccountNumber(accountNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);
