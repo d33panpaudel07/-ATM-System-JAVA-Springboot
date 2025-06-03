@@ -1,72 +1,70 @@
 package com.example.group1.atmUsingSpringBoot.services.impl;
 
 import com.example.group1.atmUsingSpringBoot.dto.CustomerDto;
+import com.example.group1.atmUsingSpringBoot.dto.Response;
 import com.example.group1.atmUsingSpringBoot.entity.Customer;
 import com.example.group1.atmUsingSpringBoot.helper.customer.CustomerValidator;
 import com.example.group1.atmUsingSpringBoot.mapper.CustomerMapper;
 import com.example.group1.atmUsingSpringBoot.repository.CustomerRepository;
 import com.example.group1.atmUsingSpringBoot.services.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    @Autowired
+
     CustomerRepository customerRepository;
+    CustomerServiceImpl(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
+    }
 
 
     @Override
-    public Boolean createCustomer(CustomerDto dto) {
+    public Response createCustomer(CustomerDto dto) {
         if(!CustomerValidator.validateCustomer(dto)){
-            return false;
+            return new Response(false,"Invalid customer credentials", null);
         }
         Customer customer = CustomerMapper.toEntity(dto);
         customerRepository.save(customer);
-        return true;
+        return new Response(true, "Customer created successfully");
     }
 
     @Override
-    public Boolean updateCustomer(CustomerDto dto) {
+    public Response updateCustomer(String accountNumber, CustomerDto dto) {
         if(!CustomerValidator.validateCustomer(dto)){
-            return false;
+            return new Response(false,"Invalid customer credentials", null);
         }
         if(customerRepository.existsByAccountNumber(dto.getAccountNumber()) == false){
-            return false;
+            return new Response(false,"Customer doesn't exist...", null);
         }
         Customer customer = CustomerMapper.toEntity(dto);
         customerRepository.save(customer);
-        return true;
+        return new Response(true, "Customer updated successfully...");
     }
 
     @Override
-    public Boolean deleteCustomerByAccountNumber(CustomerDto dto) {
-        if(!CustomerValidator.validateCustomer(dto)){
-            return false;
+    public Response deleteCustomerByAccountNumber(String accountNumber) {
+        if(customerRepository.existsByAccountNumber(accountNumber) == false){
+            return new Response(false,"Customer doesn't exist...", null);
         }
-        if(customerRepository.existsByAccountNumber(dto.getAccountNumber()) == false){
-            return false;
-        }
-        customerRepository.deleteByAccountNumber(dto.getAccountNumber());
-        return true;
+        customerRepository.deleteByAccountNumber(accountNumber);
+        return new Response(true, "Customer deleted successfully...");
     }
 
     @Override
-    public Boolean deleteCustomerById(Integer id) {
+    public Response deleteCustomerById(Integer id) {
         if(!customerRepository.existsById(id)){
-            return false;
+            return new Response(false,"Customer doesn't exist...", null);
         }
         customerRepository.deleteById(id);
-        return true;
+        return new Response(true, "Customer deleted successfully...");
     }
 
     @Override
-    public CustomerDto readCustomer(String accountNumber) {
+    public Response getCustomerByAccountNumber(String accountNumber) {
         if(!customerRepository.existsByAccountNumber(accountNumber)){
             return null;
         }
         Customer customer = customerRepository.findByAccountNumber(accountNumber);
-        return CustomerMapper.toDto(customer);
+        return new Response(true, "Customer found successfully", CustomerMapper.toDto(customer));
     }
 }

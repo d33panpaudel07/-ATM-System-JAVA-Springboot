@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BalanceServiceImpl implements BalanceService {
-    @Autowired
+
     BalanceRepository balanceRepository;
+    BalanceServiceImpl(BalanceRepository balanceRepository){
+        this.balanceRepository = balanceRepository;
+    }
 
     @Override
     public Double checkBalance(String accountNumber) {
@@ -22,6 +25,7 @@ public class BalanceServiceImpl implements BalanceService {
     public Balance updateBalance(String accountNumber, Double newBalance) {
         Balance balance = balanceRepository.findByCustomer_AccountNumber(accountNumber)
                 .orElseThrow(()->new RuntimeException("Balance record not found for account number: " + accountNumber));
+
         balance.setBalance(newBalance);
         return balanceRepository.save(balance);
     }
