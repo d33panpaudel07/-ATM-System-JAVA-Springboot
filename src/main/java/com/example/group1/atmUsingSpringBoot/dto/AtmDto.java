@@ -1,7 +1,6 @@
 package com.example.group1.atmUsingSpringBoot.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class CustomerDto {
-    private String name;
+public class AtmDto {
+
     private String accountNumber;
-    private String mobileNumber;
+    private String fromAccount;
+    private String toAccount;
+    private Double amount;
 }

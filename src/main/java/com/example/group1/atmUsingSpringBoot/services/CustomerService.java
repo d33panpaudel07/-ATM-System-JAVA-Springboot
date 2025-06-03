@@ -9,4 +9,6 @@ public interface CustomerService {
     Response deleteCustomerByAccountNumber(String accountNumber);
     Response deleteCustomerById(Integer id);
     Response getCustomerByAccountNumber(String accountNumber);
+
+    Response getAllCustomers();
 }

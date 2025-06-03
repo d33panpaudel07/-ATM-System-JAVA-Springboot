@@ -22,4 +22,9 @@ public class Balance {
 //    @Column(name = "balance", nullable = false, precision = 15, scale = 2)
     @Column(name = "balance", nullable = false)
     private Double balance;
+
+    public Balance(Customer customer, Double balance) {
+        this.customer = customer;
+        this.balance = balance;
+    }
 }

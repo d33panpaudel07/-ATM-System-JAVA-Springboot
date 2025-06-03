@@ -4,9 +4,11 @@ import com.example.group1.atmUsingSpringBoot.entity.Balance;
 import com.example.group1.atmUsingSpringBoot.repository.BalanceRepository;
 import com.example.group1.atmUsingSpringBoot.services.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
+@Qualifier("balanceService")
 public class BalanceServiceImpl implements BalanceService {
 
     BalanceRepository balanceRepository;

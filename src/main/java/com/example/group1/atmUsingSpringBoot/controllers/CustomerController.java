@@ -17,6 +17,11 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @GetMapping("/test")
+    public String testing(){
+        return "Works";
+    }
+
     @PostMapping()
     public ResponseEntity<Response> createCustomer(@RequestBody CustomerDto customerDto){
         Response response = customerService.createCustomer(customerDto);
@@ -35,6 +40,11 @@ public class CustomerController {
     @PostMapping("/delete/{accountNumber}")
     public ResponseEntity<Response> deleteCustomer(@PathVariable String accountNumber){
         Response response = customerService.deleteCustomerByAccountNumber(accountNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<Response> getAllCustomers(){
+        Response response = customerService.getAllCustomers();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
