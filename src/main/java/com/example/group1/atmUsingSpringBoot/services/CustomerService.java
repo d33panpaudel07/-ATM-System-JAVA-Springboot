@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 public interface CustomerService {
     Boolean createCustomer(CustomerDto dto);
     Boolean updateCustomer(CustomerDto dto);
-    Boolean deleteCustomer(CustomerDto dto);
+    Boolean deleteCustomerByAccountNumber(CustomerDto dto);
+    Boolean deleteCustomerById(Integer id);
     CustomerDto readCustomer(String accountNumber);
 }

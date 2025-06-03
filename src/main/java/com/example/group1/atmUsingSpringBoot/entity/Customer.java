@@ -24,4 +24,10 @@ public class Customer {
 
     @Column(name = "mobile_number", nullable = false, length = 15)
     private String mobileNumber;
+
+    public Customer(String name, String accountNumber, String mobileNumber) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.mobileNumber = mobileNumber;
+    }
 }
